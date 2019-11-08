@@ -20,3 +20,10 @@ def publicar(request):
 
     return render(request, 'twitter_app/publicacao.html', {'form': form})
 
+def perfil(request, user):
+    profile = User.objects.get(username=user)
+    pessoa = Pessoa.objects.get(usuario=profile)
+    publicacoes = Publicacao.objects.all().order_by('data_publicacao').reverse().filter(usuario=pessoa)
+    print(publicacoes)
+
+    return render(request, 'twitter_app/perfil.html', {'publicacoes': publicacoes})
