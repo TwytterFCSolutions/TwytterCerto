@@ -1,0 +1,28 @@
+<html>
+<head>
+    <link href="https://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+</head>
+<body>
+<div>
+    <div class="header clearfix  col-md-6 offset-md-3">
+        {% if user.is_authenticated %}
+            <nav>
+                <ul class="nav nav-pills float-right">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'novapub' %}">Publicar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Sair</a>
+                    </li>
+                </ul>
+            </nav>
+
+            <h3>Bem-vindo, {{ user.username }}!</h3>
+        {% else %}
+            <h3>Você não está logado, favor fazer <a href="/login"> login</a>.</h3>
+        {% endif %}
+    </div>
+</div>
+<div>
+</body>
+</html>
