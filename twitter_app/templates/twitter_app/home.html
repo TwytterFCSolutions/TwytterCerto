@@ -18,6 +18,19 @@
             </nav>
 
             <h3>Bem-vindo, {{ user.username }}!</h3>
+            <br>
+{% for publicacao in seguindo %}
+    <li>
+        <a href="#">@{{ publicacao.usuario }}</a>
+        <a class="float-right">{{ publicacao.data_publicacao }}</a>
+        <p>{{ publicacao.conteudo }}</p>
+    </li>
+{% endfor %}
+
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'novapub' %}">Publicar</a>
+</li>
         {% else %}
             <h3>Você não está logado, favor fazer <a href="/login"> login</a>.</h3>
         {% endif %}

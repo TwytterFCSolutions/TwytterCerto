@@ -7,6 +7,9 @@
     <div class="header clearfix  col-md-6 offset-md-3">
       <nav>
         <ul class="nav nav-pills float-right">
+            <li class="nav-item">
+            <a class="nav-link" href="seguir/{{ pessoa.usuario.username }}">Seguir</a>
+          </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'novapub' %}">Publicar</a>
           </li>
@@ -24,6 +27,7 @@
     <div class="container mt-5 mb-5">
         <div class="row">
             <div class="col-md-6 offset-md-3">
+            <h4>Perfil {{ pessoa.nome }}</h4>
                 <ul>
 
           {% for publicacao in publicacoes %}

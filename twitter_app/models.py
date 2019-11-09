@@ -26,6 +26,6 @@ class Comentario(models.Model):
 class Publicacao(models.Model):
     usuario = models.ForeignKey(Pessoa, null=True, blank=True, on_delete=models.SET_NULL)
     conteudo = models.CharField(max_length=200)
-    data_publicacao = models.DateField(auto_now_add=True)
+    data_publicacao = models.DateTimeField(auto_now_add=True)
     comentario = models.ForeignKey(Comentario, null=True, blank=True, related_name='Comentario',
                                    on_delete=models.SET_NULL)

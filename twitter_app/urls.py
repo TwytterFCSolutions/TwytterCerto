@@ -1,10 +1,10 @@
 from django.urls import path, include
-from twitter_app import views
+from twitter_app.views import *
 
 urlpatterns = [
     path('', include('django.contrib.auth.urls')),
-    path('home/', views.home, name='home'),
-    path('publicar/', views.publicar, name='novapub'),
-    path('perfil/<str:user>', views.perfil, name='perfil'),
-
+    path('home/', home, name='home'),
+    path('publicar/', publicar, name='novapub'),
+    path('perfil/<str:user>', perfil, name='perfil'),
+    path('perfil/seguir/<str:user>', seguir, name='seguir'),
 ]
