@@ -5,16 +5,11 @@ from .forms import *
 
 
 def home(request):
-    def home(request):
-        lista = []
-        if request.user.is_authenticated:
-            logado = Pessoa.objects.get(usuario=request.user)
-            seguindo = logado.seguindo.all()
-            publicacoes = Publicacao.objects.filter(usuario__in=seguindo).order_by('data_publicacao').reverse()[:30]
-
-        return render(request, 'twitter_app/home.html', {'seguindo': publicacoes})
-
-    return render(request, 'twitter_app/home.html')
+    if request.user.is_authenticated:
+        logado = Pessoa.objects.get(usuario=request.user)
+        seguindo = logado.seguindo.all()
+        publicacoes = Publicacao.objects.filter(usuario__in=seguindo).order_by('data_publicacao').reverse()[:30]
+    return render(request, 'twitter_app/home.html', {'seguindo': publicacoes})
 
 
 def publicar(request):
@@ -31,13 +26,14 @@ def publicar(request):
 
     return render(request, 'twitter_app/publicacao.html', {'form': form})
 
+
 def perfil(request, user):
     profile = User.objects.get(username=user)
     pessoa = Pessoa.objects.get(usuario=profile)
     publicacoes = Publicacao.objects.all().order_by('data_publicacao').reverse().filter(usuario=pessoa)
     print(publicacoes)
 
-    return render(request, 'twitter_app/perfil.html', {'publicacoes': publicacoes})
+    return render(request, 'twitter_app/perfil.html', {'publicacoes': publicacoes, 'pessoa': pessoa})
 
 
 def seguir(request, user):
