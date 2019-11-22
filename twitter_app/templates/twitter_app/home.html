@@ -9,6 +9,9 @@
             <nav>
                 <ul class="nav nav-pills float-right">
                     <li class="nav-item">
+                        <a class="nav-link" href="{% url 'perfil' user=user.username %}">Perfil</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{% url 'novapub' %}">Publicar</a>
                     </li>
                     <li class="nav-item">
@@ -19,15 +22,24 @@
 
             <h3>Bem-vindo, {{ user.username }}!</h3>
             <br>
-            <ul>
-                {% for publicacao in seguindo %}
-                    <li>
-                        <a href="#">@{{ publicacao.usuario }}</a>
-                        <a class="float-right">{{ publicacao.data_publicacao }}</a>
-                        <p>{{ publicacao.conteudo }}</p>
-                    </li>
-                {% endfor %}
-            </ul>
+            <div class="container mt-5 mb-5">
+                <div class="row">
+                    <div class="col-md-6 offset-md-3">
+                        <ul>
+                            {% for publicacao in seguindo %}
+                                <li>
+                                    <a href="{% url 'perfil' user=publicacao.usuario.usuario.username %}">@{{ publicacao.usuario }}</a>
+                                    <a class="float-right">{{ publicacao.data_publicacao }}</a>
+                                    <p>{{ publicacao.conteudo }}</p>
+                                    <a href="/detalhes/{{ publicacao.id }}">
+                                        <button type="submit">Detalhe</button>
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
         {% else %}
             <h3>Você não está logado, favor fazer <a href="/login"> login</a>.</h3>
         {% endif %}

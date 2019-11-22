@@ -14,18 +14,21 @@ class Pessoa(models.Model):
         return self.nome
 
 
-class Comentario(models.Model):
-    conteudo = models.CharField(max_length=200)
-    data_comentario = models.DateField(auto_now_add=True)
+class Publicacao(models.Model):
     usuario = models.ForeignKey(Pessoa, null=True, blank=True, on_delete=models.SET_NULL)
+    conteudo = models.CharField(max_length=200)
+    data_publicacao = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.conteudo
 
 
-class Publicacao(models.Model):
-    usuario = models.ForeignKey(Pessoa, null=True, blank=True, on_delete=models.SET_NULL)
+class Comentario(models.Model):
     conteudo = models.CharField(max_length=200)
-    data_publicacao = models.DateTimeField(auto_now_add=True)
-    comentario = models.ForeignKey(Comentario, null=True, blank=True, related_name='Comentario',
+    data_comentario = models.DateTimeField(auto_now_add=True)
+    usuario = models.ForeignKey(Pessoa, null=True, blank=True, on_delete=models.SET_NULL)
+    publicacao = models.ForeignKey(Publicacao, null=True, blank=True, related_name='Publicacao',
                                    on_delete=models.SET_NULL)
+
+    def __str__(self):
+        return self.conteudo

@@ -3,45 +3,50 @@
     <link href="https://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 </head>
 <body>
-<div class="container">
+<div>
     <div class="header clearfix  col-md-6 offset-md-3">
-      <nav>
-        <ul class="nav nav-pills float-right">
-            <li class="nav-item">
-            <a class="nav-link" href="seguir/{{ pessoa.usuario.username }}">Seguir</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'novapub' %}">Publicar</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/logout">Sair</a>
-          </li>
-        </ul>
-      </nav>
-      {% if user.is_authenticated %}
-      <h3>Bem-vindo, {{ user.username }}!</h3>
-      {% else %}
-      <h3>Você não está logado, favor fazer <a href="/login"> login</a>.</h3>
-      {% endif %}
+        <nav>
+            <ul class="nav nav-pills float-right">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                </li>
+                {% if pessoa.usuario.username != user.username %}
+                <li class="nav-item">
+                    <a class="nav-link" href="seguir/{{ pessoa.usuario.username }}">Seguir</a>
+                </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Sair</a>
+                </li>
+            </ul>
+        </nav>
+        {% if user.is_authenticated %}
+            <h3>Bem-vindo, {{ user.username }}!</h3>
+        {% else %}
+            <h3>Você não está logado, favor fazer <a href="/login"> login</a>.</h3>
+        {% endif %}
     </div>
     <div class="container mt-5 mb-5">
         <div class="row">
             <div class="col-md-6 offset-md-3">
-            <h4>Perfil {{ pessoa.nome }}</h4>
+            {% if pessoa.usuario.username != user.username %}
+                <h4>Perfil {{ pessoa.nome }}</h4>
+            {% endif %}
                 <ul>
 
-          {% for publicacao in publicacoes %}
+                    {% for publicacao in publicacoes %}
 
-                    <li>
-                        <a href="#">@{{ publicacao.usuario }}</a>
-                        <a class="float-right">{{ publicacao.data_publicacao }}</a>
-                        <p>{{ publicacao.conteudo }}</p>
-                    </li>
-          {% endfor %}
+                        <li>
+                            <a>@{{ publicacao.usuario }}</a>
+                            <a class="float-right">{{ publicacao.data_publicacao }}</a>
+                            <p>{{ publicacao.conteudo }}</p>
+                            <a href="/detalhes/{{ publicacao.id }}"><button type="submit">Detalhe</button></a>
+                        </li>
+                    {% endfor %}
                 </ul>
             </div>
         </div>
     </div>
-<div>
+    <div>
 </body>
 </html>

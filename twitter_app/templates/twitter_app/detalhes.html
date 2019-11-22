@@ -1,0 +1,60 @@
+<html>
+<head>
+    <link href="https://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+</head>
+<body>
+<div class="container">
+    <div class="header clearfix  col-md-6 offset-md-3">
+        <nav>
+            <ul class="nav nav-pills float-right">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'novapub' %}">Publicar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Sair</a>
+                </li>
+            </ul>
+        </nav>
+        {% if user.is_authenticated %}
+            <h3>Detalhes</h3>
+        {% else %}
+            <h3>Você não está logado, favor fazer <a href="/login"> login</a>.</h3>
+        {% endif %}
+    </div>
+    <div class="container mt-5 mb-5">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                {% for publicacoes in publicacoes %}
+                    <li>
+                        <a href="{% url 'perfil' user=publicacoes.usuario.usuario.username %}">{{ publicacoes.usuario }}</a>
+                        <a class="float-right">{{ publicacoes.data_publicacao }}</a>
+                        <p>{{ publicacoes.conteudo }}</p>
+                    </li>
+                {% endfor %}
+            <h5>Comentários</h5>
+                <ul>
+
+                    {% for publicacoes in publicacoes %}
+                        {% for comentario in comentarios %}
+                            {% if comentario.publicacao == publicacoes %}
+                                <br><a href="{% url 'perfil' user=comentario.usuario.usuario.username %}">@{{ comentario.usuario }}</a>
+                                <a class="float-right">{{ comentario.data_comentario }}</a>
+                                <p>{{ comentario.conteudo }}</p>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                    {% if user.is_authenticated %}
+                        <a class="nav-link" href="/comentario/{{ pub_id }}"><button type="submit">Comentar</button></a>
+                    {% endif %}
+                </ul>
+            </div>
+            </ul>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>
